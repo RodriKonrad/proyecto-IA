@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tutor IA Académico - Programación</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div class="brand">
+        <div class="logo">🤖</div>
+        <div>
+          <h1>Tutor IA Académico</h1>
+          <p>Aprende programación con un tutor socrático y práctico.</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="/">Inicio</a>
+        <a href="/ayuda">Ayuda</a>
+      </nav>
+    </header>
+
+    <main class="main-grid">
+      <section class="chat-card">
+        <div class="card-head">
+          <div>
+            <h2>Chat de tutor</h2>
+            <p>Escribe tu pregunta sobre programación y recibe guías paso a paso.</p>
+          </div>
+          <span class="badge">IA Gemini</span>
+        </div>
+
+        <div id="chatLog" class="chat-log" aria-live="polite">
+          <div class="msg bot"><strong>Tutor:</strong> ¡Hola! Soy tu tutor de Python. Cuéntame qué concepto o ejercicio te gustaría entender hoy, y lo analizamos paso a paso.</div>
+        </div>
+
+        <form id="chatForm" class="chat-form">
+          <textarea id="messageInput" rows="3" placeholder="Escribe tu pregunta o pega tu código aquí..."></textarea>
+          <div class="actions">
+            <button type="button" id="exampleBtn" class="ghost">Ejemplo</button>
+            <button type="submit" class="primary">Enviar</button>
+          </div>
+        </form>
+
+        <div id="error" class="error" hidden></div>
+      </section>
+
+      <aside class="info-card">
+        <div class="box">
+          <h3>¿Cómo usarlo?</h3>
+          <ul>
+            <li>Pide explicaciones: "¿Qué es recursion?"</li>
+            <li>Corrige tu código: "Mi función no retorna"</li>
+            <li>Pide ejemplos reales y ejercicios.
+          </ul>
+        </div>
+
+        <div class="box">
+          <h3>Temas sugeridos</h3>
+          <button class="topic">Python básico</button>
+          <button class="topic">Estructuras de datos</button>
+          <button class="topic">Algoritmos</button>
+        </div>
+
+        <div class="box">
+          <h3>Atajos</h3>
+          <p>Usa código con triple acento y describe el error. Ej: <br>```<br>def suma(a,b): <br>   return a+b<br> ```<br>Resultado:<br><pre><code>def suma(a,b):<br>   return a+b</code></pre></p> 
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
