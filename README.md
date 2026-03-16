@@ -92,4 +92,5 @@ pip freeze > requirements.txt
 
 
 ![Tutor IA Académico](34693.png)
+
 ---
