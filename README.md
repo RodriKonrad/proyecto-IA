@@ -12,10 +12,10 @@ Antes de comenzar, asegúrate de tener:
 
 Sigue estos pasos para ejecutar el proyecto localmente:
 
-### 1) Clonar el repositorio
+### 1) Descargar el archivo .ZIP del proyecto o clonar el repositorio
 
 ```bash
-git clone <tu-repo> proyecto-IA
+git clone https://github.com/RodriKonrad/proyecto-IA.git proyecto-IA
 cd proyecto-IA
 ```
 
