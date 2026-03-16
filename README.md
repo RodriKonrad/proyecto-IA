@@ -90,4 +90,6 @@ pip freeze > requirements.txt
 3. Escribe tu pregunta de programación.
 4. Presiona Enviar para recibir orientación del tutor IA.
 
+
+![Tutor IA Académico](assets/34693.png)
 ---
