@@ -91,6 +91,6 @@ pip freeze > requirements.txt
 4. Presiona Enviar para recibir orientación del tutor IA.
 
 
-![Tutor IA Académico](34693.png)
+![Ejemplo de ejecución](assets/images/EjemploEjecucion.png)
 
 ---
