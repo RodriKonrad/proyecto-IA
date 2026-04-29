@@ -13,20 +13,13 @@ function escapeHtml(text) {
 
 function renderMarkdown(text) {
   const escaped = escapeHtml(text);
-
-  // Convert triple backtick code blocks (```lang\ncode```) to HTML (supports CRLF and optional language)
   let html = escaped.replace(/```([^\n\r]*)[\n\r]+([\s\S]*?)[\n\r]+```/g, (match, lang, code) => {
     const language = lang ? ` class="language-${lang.trim()}"` : '';
     return `<pre><code${language}>${code}</code></pre>`;
   });
 
-  // Convert inline code `code`
   html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-
-  // Convert CRLF to LF for consistent line handling
   html = html.replace(/\r\n/g, '\n');
-
-  // Convert paragraphs and line breaks
   const paragraphs = html.split(/\n\n+/).map((p) => p.replace(/\n/g, '<br>'));
   return paragraphs.join('<br><br>');
 }
@@ -35,7 +28,7 @@ function appendMessage(text, role) {
   const div = document.createElement('div');
   div.className = `msg ${role}`;
   const formatted = renderMarkdown(text);
-  div.innerHTML = `<strong>${role === 'user' ? 'Tú' : 'Tutor'}:</strong> ${formatted}`;
+  div.innerHTML = `<strong>${role === 'user' ? 'Tú' : 'Asesor'}:</strong> ${formatted}`;
   chatLog.appendChild(div);
   chatLog.scrollTop = chatLog.scrollHeight;
 }
@@ -53,7 +46,7 @@ chatForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const text = messageInput.value.trim();
   if (!text) {
-    showError('Escribe tu duda antes de enviar.');
+    showError('Describe el caso antes de enviar.');
     return;
   }
   hideError();
@@ -81,5 +74,5 @@ chatForm.addEventListener('submit', async (event) => {
 });
 
 exampleBtn.addEventListener('click', () => {
-  messageInput.value = "Tengo un error en Python:\n ```python\nfor i in range(5)\n    print(i)\n```\n¿Qué está mal?";
+  messageInput.value = "Me impusieron un comparendo por pasar un semáforo en rojo, pero aseguro que la luz estaba en amarillo y no había señalización adicional. ¿Qué elementos deben considerarse para evaluar si la multa es válida?";
 });
