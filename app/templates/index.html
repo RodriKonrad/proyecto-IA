@@ -10,10 +10,10 @@
   <div class="app-shell">
     <header class="hero">
       <div class="brand">
-        <div class="logo">⚖️</div>
+        <div class="logo">🚦</div>
         <div>
           <h1>Asesor Normativo de Tránsito</h1>
-          <p>Evaluación técnica de comparendos y cumplimiento de normativa de tránsito colombiana.</p>
+          <p>Evaluación técnica de comparendos basada en normativa oficial colombiana (RAG).</p>
         </div>
       </div>
       <nav class="nav">
@@ -27,18 +27,24 @@
         <div class="card-head">
           <div>
             <h2>Consulta</h2>
-            <p>Describe el caso, la infracción o la situación del comparendo para recibir un análisis normativo.</p>
+            <p>Describe el caso, la infracción o la situación del comparendo para recibir un análisis normativo fundamentado en los documentos oficiales.</p>
           </div>
-          <span class="badge">Gemini</span>
+          <span class="badge">Ley 769 de 2002</span>
         </div>
 
         <div id="chatLog" class="chat-log" aria-live="polite">
-          <div class="msg bot"><strong>Asesor:</strong> Bienvenido. Indica los hechos, las condiciones del comparendo y cualquier evidencia disponible para un análisis técnico y objetivo.</div>
+          <div class="msg bot">
+            <strong>Asesor:</strong> Bienvenido al sistema de asesoría normativa de tránsito.
+            Mi análisis se basa <em>exclusivamente</em> en los documentos oficiales del código nacional de tránsito de Colombia.
+            Describe el caso, la infracción y cualquier evidencia disponible.
+          </div>
         </div>
 
         <form id="chatForm" class="chat-form">
-          <textarea id="messageInput" rows="3" placeholder="Describa el comparendo, la conducta y la normativa relacionada..."></textarea>
+          <textarea id="messageInput" rows="3"
+            placeholder="Describa el comparendo, la conducta y la normativa relacionada..."></textarea>
           <div class="actions">
+            <button type="button" id="resetBtn" class="ghost">Nueva consulta</button>
             <button type="button" id="exampleBtn" class="ghost">Ejemplo</button>
             <button type="submit" class="primary">Enviar consulta</button>
           </div>
@@ -51,7 +57,7 @@
         <div class="box">
           <h3>Uso recomendado</h3>
           <ul>
-            <li>Proporcione hechos concretos y fechas.</li>
+            <li>Proporcione hechos concretos.</li>
             <li>Mencione el tipo de infracción y el comparendo recibido.</li>
             <li>Incluya detalles sobre señalización, testigos o pruebas.</li>
           </ul>
@@ -59,14 +65,20 @@
 
         <div class="box">
           <h3>Áreas de análisis</h3>
-          <button class="topic">Semáforos y señales</button>
-          <button class="topic">Estacionamiento y paradas</button>
-          <button class="topic">Velocidad y zonas restringidas</button>
+          <button class="topic" data-query="¿Cuál es la normativa para infracciones en semáforos según el Código de Tránsito?">Semáforos y señales</button>
+          <button class="topic" data-query="¿Qué dice la ley sobre estacionamiento en zonas prohibidas?">Estacionamiento y paradas</button>
+          <button class="topic" data-query="¿Cuáles son las sanciones por exceso de velocidad en zonas escolares?">Velocidad y zonas restringidas</button>
+        </div>
+
+        <div class="box rag-info">
+          <h3>🔍 Sistema RAG activo</h3>
+          <p>Las respuestas se generan recuperando fragmentos relevantes de los documentos
+             oficiales vigentes cargados en el sistema.</p>
         </div>
 
         <div class="box">
-          <h3>Consejos</h3>
-          <p>La respuesta está basada en normativa suministrada y en un análisis objetivo. No sustituye asesoría judicial formal.</p>
+          <h3>Aviso legal</h3>
+          <p>El análisis se basa en la normativa disponible y no sustituye asesoría jurídica profesional.</p>
         </div>
       </aside>
     </main>

@@ -1,0 +1,21 @@
+"""
+rag/__init__.py
+Paquete RAG — Retrieval Augmented Generation
+Asesor Normativo de Tránsito Colombiano
+"""
+
+from rag.loader import load_pdfs
+from rag.chunker import split_documents
+from rag.vectorstore import build_vector_store, get_retriever
+from rag.pipeline import RAGPipeline
+from rag.prompt_config import build_prompt_template, format_context
+
+__all__ = [
+    "load_pdfs",
+    "split_documents",
+    "build_vector_store",
+    "get_retriever",
+    "RAGPipeline",
+    "build_prompt_template",
+    "format_context",
+]

@@ -1,0 +1,23 @@
+# Variables de entorno (NUNCA subir al repositorio)
+.env
+
+# Base vectorial generada automáticamente
+chroma_db/
+
+# Entorno virtual
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
