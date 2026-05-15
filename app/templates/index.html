@@ -1,89 +1,167 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Asesor Normativo de Tránsito</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>TransitLex — Asesor Normativo de Tránsito</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css"/>
 </head>
 <body>
-  <div class="app-shell">
-    <header class="hero">
-      <div class="brand">
-        <div class="logo">🚦</div>
-        <div>
-          <h1>Asesor Normativo de Tránsito</h1>
-          <p>Evaluación técnica de comparendos basada en normativa oficial colombiana (RAG).</p>
+
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<header class="header">
+  <a href="/" class="brand">
+    <img class="brand-logo" src="/assets/logo_transitlex.png" alt="TransitLex"/>
+    <div class="brand-text">
+      <span class="brand-name">Transit<em>Lex</em></span>
+      <span class="brand-country">Colombia</span>
+    </div>
+  </a>
+  <nav class="nav">
+    <a href="/"          class="nav-link {% if active=='inicio'     %}active{% endif %}">Inicio</a>
+    <a href="/ayuda"     class="nav-link {% if active=='ayuda'      %}active{% endif %}">Ayuda</a>
+    <a href="/evaluacion"class="nav-link {% if active=='evaluacion' %}active{% endif %}">Evaluación</a>
+    <a href="/" id="resetBtn" class="btn-nav-cta">Nueva consulta</a>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════ CHAT LAYOUT ══════════════════════ -->
+<div class="chat-layout">
+
+  <!-- ───────── COLUMNA IZQUIERDA: CHAT ───────── -->
+  <section class="chat-area">
+
+    <!-- Historial -->
+    <div id="chatLog" class="chat-log" aria-live="polite">
+      <div class="msg bot">
+        <div class="msg-header">⚖️ TRANSITLEX</div>
+        Bienvenido al sistema de asistencia técnica de <strong>TransitLex</strong>.
+        ¿En qué puedo orientarle hoy sobre la normativa de tránsito colombiana?
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="chat-input-card">
+      <form id="chatForm">
+        <textarea id="messageInput" rows="3"
+          placeholder="Describe tu situación aquí… (Enter para enviar, Shift+Enter para nueva línea)"></textarea>
+        <div class="chat-actions">
+          <div class="chat-actions-left">
+            <button type="button" id="newChatBtn" class="btn-ghost">＋ Nueva consulta</button>
+            <button type="button" id="exampleBtn" class="btn-ghost">💡 Ejemplo</button>
+          </div>
+          <button type="submit" class="btn-send">Enviar ▷</button>
+        </div>
+      </form>
+      <div id="error" class="error" hidden></div>
+    </div>
+
+  </section>
+
+  <!-- ───────── COLUMNA DERECHA: PANEL ───────── -->
+  <aside class="chat-right">
+
+    <!-- Estado del sistema -->
+    <div class="status-card">
+      <span class="status-dot"></span>
+      <div class="status-card-text">
+        <strong>Sistema RAG Activo</strong>
+        <span>Versión Beta · Páginas 65-81 del CNT</span>
+      </div>
+    </div>
+
+    <!-- Temas frecuentes -->
+    <div>
+      <div class="section-label">Temas frecuentes</div>
+      <div class="topic-list">
+        <button class="topic-item"
+          data-query="¿Cuál es la normativa sobre fotomultas y comparendos electrónicos en Colombia?">
+          <span class="topic-icon">📷</span> Fotomultas
+        </button>
+        <button class="topic-item"
+          data-query="¿Puede ser inmovilizado mi vehículo por estar mal estacionado si yo llego al lugar antes de que se lo lleve la grúa?">
+          <span class="topic-icon">🚗</span> Inmovilización
+        </button>
+        <button class="topic-item"
+          data-query="¿Cuáles son los requisitos para la revisión técnico-mecánica y de gases en Colombia?">
+          <span class="topic-icon">🔧</span> Revisiones Técnicas
+        </button>
+        <button class="topic-item"
+          data-query="¿Bajo qué condiciones se suspende la licencia de conducción?">
+          <span class="topic-icon">🚫</span> Sanciones
+        </button>
+      </div>
+    </div>
+
+    <!-- Guía de uso -->
+    <div>
+      <div class="section-label">Guía de uso</div>
+      <div class="guide-card">
+        <div class="guide-item">
+          <span class="guide-item-icon">❓</span>
+          <div>
+            <strong>Cómo consultar</strong>
+            <span>Describa claramente los hechos del caso, el tipo de infracción, el lugar donde ocurrió y cualquier actuación de la autoridad de tránsito para obtener un análisis normativo preciso basado en los documentos oficiales disponibles.</span>
+          </div>
         </div>
       </div>
-      <nav class="nav">
-        <a href="/">Inicio</a>
-        <a href="/ayuda">Ayuda</a>
-      </nav>
-    </header>
+    </div>
 
-    <main class="main-grid">
-      <section class="chat-card">
-        <div class="card-head">
-          <div>
-            <h2>Consulta</h2>
-            <p>Describe el caso, la infracción o la situación del comparendo para recibir un análisis normativo fundamentado en los documentos oficiales.</p>
-          </div>
-          <span class="badge">Ley 769 de 2002</span>
-        </div>
+    <!-- CTA -->
+    <div class="cta-card">
+      <h4>Consultar Ley 769</h4>
+      <p>Acceda al Código Nacional de Tránsito completo con artículos y modificaciones vigentes.</p>
+      <a href="https://www.oas.org/juridico/spanish/mesicic2_col_ley_769_2002.pdf" target="_blank" class="btn-gold btn-gold-block">Ver Normativa →</a>
+    </div>
 
-        <div id="chatLog" class="chat-log" aria-live="polite">
-          <div class="msg bot">
-            <strong>Asesor:</strong> Bienvenido al sistema de asesoría normativa de tránsito.
-            Mi análisis se basa <em>exclusivamente</em> en los documentos oficiales del código nacional de tránsito de Colombia.
-            Describe el caso, la infracción y cualquier evidencia disponible.
-          </div>
-        </div>
+    <!-- Aviso legal -->
+    <div class="legal-notice">
+      <span class="icon">ℹ️</span>
+      <span>
+        <strong>Aviso Legal:</strong> Esta herramienta es informativa y no
+        sustituye la asesoría de un abogado habilitado.
+      </span>
+    </div>
 
-        <form id="chatForm" class="chat-form">
-          <textarea id="messageInput" rows="3"
-            placeholder="Describa el comparendo, la conducta y la normativa relacionada..."></textarea>
-          <div class="actions">
-            <button type="button" id="resetBtn" class="ghost">Nueva consulta</button>
-            <button type="button" id="exampleBtn" class="ghost">Ejemplo</button>
-            <button type="submit" class="primary">Enviar consulta</button>
-          </div>
-        </form>
+  </aside>
 
-        <div id="error" class="error" hidden></div>
-      </section>
+</div><!-- /chat-layout -->
 
-      <aside class="info-card">
-        <div class="box">
-          <h3>Uso recomendado</h3>
-          <ul>
-            <li>Proporcione hechos concretos.</li>
-            <li>Mencione el tipo de infracción y el comparendo recibido.</li>
-            <li>Incluya detalles sobre señalización, testigos o pruebas.</li>
-          </ul>
-        </div>
-
-        <div class="box">
-          <h3>Áreas de análisis</h3>
-          <button class="topic" data-query="¿Cuál es la normativa para infracciones en semáforos según el Código de Tránsito?">Semáforos y señales</button>
-          <button class="topic" data-query="¿Qué dice la ley sobre estacionamiento en zonas prohibidas?">Estacionamiento y paradas</button>
-          <button class="topic" data-query="¿Cuáles son las sanciones por exceso de velocidad en zonas escolares?">Velocidad y zonas restringidas</button>
-        </div>
-
-        <div class="box rag-info">
-          <h3>🔍 Sistema RAG activo</h3>
-          <p>Las respuestas se generan recuperando fragmentos relevantes de los documentos
-             oficiales vigentes cargados en el sistema.</p>
-        </div>
-
-        <div class="box">
-          <h3>Aviso legal</h3>
-          <p>El análisis se basa en la normativa disponible y no sustituye asesoría jurídica profesional.</p>
-        </div>
-      </aside>
-    </main>
+<!-- ═══════════════════════════ FOOTER ══════════════════════════ -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name">
+        <img class="footer-logo" src="/assets/logo_transitlex.png" alt="TransitLex"/>
+        TransitLex Colombia
+      </div>
+      <p>Asistente legal automatizado especializado en el Código Nacional de Tránsito. Proporcionamos información técnica, no asesoría jurídica personalizada.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Plataforma</h4>
+      <a href="#">Fotomultas</a>
+      <a href="#">Impugnaciones</a>
+      <a href="#">Consultar RUNT</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">Términos de Uso</a>
+      <a href="#">Privacidad de Datos</a>
+      <a href="/ayuda">Aviso Legal</a>
+    </div>
   </div>
+  <div class="footer-bottom">
+    <span>© 2025 TransitLex Colombia. Todos los derechos reservados.</span>
+    <div class="footer-bottom-right">
+      <span>Ley 769 de 2002 · Código Nacional de Tránsito</span>
+      <span class="footer-tag">Juris Traffic System</span>
+    </div>
+  </div>
+</footer>
 
-  <script src="/static/script.js"></script>
+<script src="/static/script.js"></script>
 </body>
 </html>

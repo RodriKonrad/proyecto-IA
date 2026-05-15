@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Evaluación RAG — TransitLex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<header class="header">
+  <a href="/" class="brand">
+    <img class="brand-logo" src="/assets/logo_transitlex.png" alt="TransitLex"/>
+    <div class="brand-text">
+      <span class="brand-name">Transit<em>Lex</em></span>
+      <span class="brand-country">Colombia</span>
+    </div>
+  </a>
+  <nav class="nav">
+    <a href="/"          class="nav-link {% if active=='inicio'     %}active{% endif %}">Inicio</a>
+    <a href="/ayuda"     class="nav-link {% if active=='ayuda'      %}active{% endif %}">Ayuda</a>
+    <a href="/evaluacion"class="nav-link {% if active=='evaluacion' %}active{% endif %}">Evaluación</a>
+    <a href="/" class="btn-nav-cta">Nueva consulta</a>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════ LAYOUT ═══════════════════════════ -->
+<div class="layout">
+
+
+
+    <!-- Encabezado -->
+    <div class="eval-header">
+      <div>
+        <h1 class="page-title">Evaluación del Sistema RAG</h1>
+        <p class="page-subtitle">Métricas de calidad RAGAS para TransitLex · Ley 769 de 2002</p>
+      </div>
+      <div class="date-pill">📅 Ejecución: Mayo 2025</div>
+    </div>
+
+    <!-- ═══ GAUGES ═══ -->
+    <div class="gauges-grid">
+
+      <!-- Faithfulness -->
+      <div class="gauge-card">
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 120 120">
+            <circle class="gauge-track" cx="60" cy="60" r="50"/>
+            <circle class="gauge-fill {{ chip_faith }}"
+                    cx="60" cy="60" r="50"
+                    stroke-dasharray="{{ CIRC }} {{ CIRC }}"
+                    stroke-dashoffset="{{ CIRC }}"
+                    data-offset="{{ off_faith }}"/>
+          </svg>
+          <div class="gauge-val">{{ "%.2f"|format(promedios.faithfulness) }}</div>
+        </div>
+        <div class="gauge-name">Faithfulness</div>
+        <div class="gauge-desc">Precisión de los hechos</div>
+      </div>
+
+      <!-- Answer Relevancy -->
+      <div class="gauge-card">
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 120 120">
+            <circle class="gauge-track" cx="60" cy="60" r="50"/>
+            <circle class="gauge-fill {{ chip_rel }}"
+                    cx="60" cy="60" r="50"
+                    stroke-dasharray="{{ CIRC }} {{ CIRC }}"
+                    stroke-dashoffset="{{ CIRC }}"
+                    data-offset="{{ off_rel }}"/>
+          </svg>
+          <div class="gauge-val">{{ "%.2f"|format(promedios.answer_relevancy) }}</div>
+        </div>
+        <div class="gauge-name">Answer Relevancy</div>
+        <div class="gauge-desc">Pertinencia de la respuesta</div>
+      </div>
+
+      <!-- Context Precision -->
+      <div class="gauge-card">
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 120 120">
+            <circle class="gauge-track" cx="60" cy="60" r="50"/>
+            <circle class="gauge-fill {{ chip_prec }}"
+                    cx="60" cy="60" r="50"
+                    stroke-dasharray="{{ CIRC }} {{ CIRC }}"
+                    stroke-dashoffset="{{ CIRC }}"
+                    data-offset="{{ off_prec }}"/>
+          </svg>
+          <div class="gauge-val">{{ "%.2f"|format(promedios.context_precision) }}</div>
+        </div>
+        <div class="gauge-name">Context Precision</div>
+        <div class="gauge-desc">Calidad del contexto extraído</div>
+      </div>
+
+    </div><!-- /gauges-grid -->
+
+    <!-- ═══ TABLA DE DETALLE ═══ -->
+    <div class="table-card">
+      <div class="table-head">
+        <h2>Detalle por Pregunta</h2>
+        <div class="filter-wrap">
+          <input type="search" id="tableSearch" placeholder="Buscar pregunta…"/>
+        </div>
+      </div>
+
+      <table class="eval-table" id="evalTable">
+        <thead>
+          <tr>
+            <th class="sortable" data-col="0">Pregunta <em class="sort-arr">↕</em></th>
+            <th class="center sortable" data-col="1">Faithfulness <em class="sort-arr">↕</em></th>
+            <th class="center sortable" data-col="2">Answer Rel. <em class="sort-arr">↕</em></th>
+            <th class="center sortable" data-col="3">Context Prec. <em class="sort-arr">↕</em></th>
+          </tr>
+        </thead>
+        <tbody id="evalBody">
+          {% for row in resultados %}
+          <tr>
+            <td>{{ row.pregunta }}</td>
+            <td class="center"><span class="score-chip {{ row.chip_f }}">{{ "%.2f"|format(row.faithfulness) }}</span></td>
+            <td class="center"><span class="score-chip {{ row.chip_a }}">{{ "%.2f"|format(row.answer_relevancy) }}</span></td>
+            <td class="center"><span class="score-chip {{ row.chip_c }}">{{ "%.2f"|format(row.context_precision) }}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="table-footer">
+        <span id="rowCount">Mostrando {{ total_consultas }} de {{ total_consultas }} consultas evaluadas</span>
+        <div class="pg-btns">
+          <button class="pg-btn" disabled>&#8249;</button>
+          <button class="pg-btn" disabled>&#8250;</button>
+        </div>
+      </div>
+    </div><!-- /table-card -->
+
+    <!-- Footer dentro del main -->
+    <footer class="footer" style="margin-top: 44px;">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">
+            <img class="footer-logo" src="/assets/logo_transitlex.png" alt="TransitLex"/>
+            TransitLex Colombia
+          </div>
+          <p>Evaluación realizada con RAGAS sobre la Ley 769 de 2002 — Código Nacional de Tránsito Terrestre.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Plataforma</h4>
+          <a href="#">Fotomultas</a>
+          <a href="#">Impugnaciones</a>
+          <a href="#">Consultar RUNT</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Términos de Uso</a>
+          <a href="#">Privacidad de Datos</a>
+          <a href="/ayuda">Aviso Legal</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 TransitLex Colombia. Todos los derechos reservados.</span>
+        <div class="footer-bottom-right">
+          <span>Ley 769 de 2002 · Código Nacional de Tránsito</span>
+          <span class="footer-tag">Juris Traffic System</span>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+</div><!-- /layout -->
+
+<script>
+/* ── Gauge animation on load ─────────────────────────────────────────── */
+window.addEventListener('load', () => {
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.gauge-fill[data-offset]').forEach(el => {
+      el.style.strokeDashoffset = el.dataset.offset;
+    });
+  });
+});
+
+/* ── Table: live search filter ───────────────────────────────────────── */
+const searchInput = document.getElementById('tableSearch');
+const evalBody    = document.getElementById('evalBody');
+const rowCountEl  = document.getElementById('rowCount');
+const totalRows   = evalBody ? evalBody.querySelectorAll('tr').length : 0;
+
+searchInput && searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  let visible = 0;
+  evalBody.querySelectorAll('tr').forEach(tr => {
+    const text = tr.cells[0].textContent.toLowerCase();
+    const show = !q || text.includes(q);
+    tr.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  if (rowCountEl) rowCountEl.textContent = `Mostrando ${visible} de ${totalRows} consultas evaluadas`;
+});
+
+/* ── Table: sortable columns ─────────────────────────────────────────── */
+const table   = document.getElementById('evalTable');
+let sortCol   = -1;
+let sortAsc   = true;
+
+table && table.querySelectorAll('th.sortable').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = parseInt(th.dataset.col);
+    if (sortCol === col) {
+      sortAsc = !sortAsc;
+    } else {
+      sortCol = col; sortAsc = true;
+    }
+
+    /* Update header arrows */
+    table.querySelectorAll('th.sortable').forEach(h => {
+      h.classList.remove('sorted');
+      h.querySelector('.sort-arr').textContent = '↕';
+    });
+    th.classList.add('sorted');
+    th.querySelector('.sort-arr').textContent = sortAsc ? '↑' : '↓';
+
+    /* Sort rows */
+    const rows = Array.from(evalBody.querySelectorAll('tr'));
+    rows.sort((a, b) => {
+      const av = a.cells[col].textContent.trim();
+      const bv = b.cells[col].textContent.trim();
+      const an = parseFloat(av), bn = parseFloat(bv);
+      const cmp = isNaN(an) ? av.localeCompare(bv) : an - bn;
+      return sortAsc ? cmp : -cmp;
+    });
+    rows.forEach(r => evalBody.appendChild(r));
+  });
+});
+</script>
+</body>
+</html>

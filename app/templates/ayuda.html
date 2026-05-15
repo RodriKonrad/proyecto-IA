@@ -1,63 +1,220 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ayuda - Asesor Normativo de Tránsito</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Ayuda — TransitLex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css"/>
 </head>
 <body>
-  <div class="app-shell">
-    <header class="hero">
-      <div class="brand">
-        <div class="logo">⚖️</div>
-        <div>
-          <h1>Centro de Ayuda</h1>
-          <p>Instrucciones para formular consultas técnica y objetivamente sobre comparendos.</p>
+
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<header class="header">
+  <a href="/" class="brand">
+    <img class="brand-logo" src="/assets/logo_transitlex.png" alt="TransitLex"/>
+    <div class="brand-text">
+      <span class="brand-name">Transit<em>Lex</em></span>
+      <span class="brand-country">Colombia</span>
+    </div>
+  </a>
+  <nav class="nav">
+    <a href="/"          class="nav-link {% if active=='inicio'     %}active{% endif %}">Inicio</a>
+    <a href="/ayuda"     class="nav-link {% if active=='ayuda'      %}active{% endif %}">Ayuda</a>
+    <a href="/evaluacion"class="nav-link {% if active=='evaluacion' %}active{% endif %}">Evaluación</a>
+    <a href="/" class="btn-nav-cta">Nueva consulta</a>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════ LAYOUT ═══════════════════════════ -->
+<div class="layout">
+
+
+
+    <!-- Hero -->
+    <div class="help-hero">
+      <h1>Guía de Usuario<br>y Normatividad</h1>
+      <p>Bienvenido al centro de soporte de TransitLex. Aquí encontrará información técnica sobre el funcionamiento de nuestra inteligencia artificial y las bases legales de tránsito en Colombia.</p>
+    </div>
+
+    <div class="help-grid">
+
+      <!-- ───── COLUMNA PRINCIPAL ───── -->
+      <div class="help-main">
+
+        <!-- ¿Qué es RAG? -->
+        <div class="help-card">
+          <div class="help-card-hd">
+            <div class="hc-icon">⚡</div>
+            <h2>¿Qué es el Sistema RAG?</h2>
+          </div>
+          <p><strong>RAG</strong> (Retrieval-Augmented Generation) es una técnica avanzada de Inteligencia Artificial que permite al sistema consultar documentos específicos en tiempo real antes de generar una respuesta.</p>
+          <div class="blockquote">
+            <div class="bq-label">Base Legal Principal</div>
+            <div class="bq-title">Ley 769 de 2002 — Código Nacional de Tránsito Terrestre</div>
+            <div class="bq-body">Nuestro sistema indexa los artículos y modificaciones vigentes para asegurar que cada recomendación esté anclada a la legislación colombiana actual.</div>
+          </div>
+        </div>
+
+        <!-- Cómo consultar -->
+        <div class="help-card">
+          <div class="help-card-hd">
+            <div class="hc-icon">📋</div>
+            <h2>Cómo realizar consultas efectivas</h2>
+          </div>
+          <div class="help-steps">
+            <div class="help-step">
+              <div class="step-num">01</div>
+              <div class="step-body">
+                <strong>Describa los hechos claramente</strong>
+                <p>Explique qué ocurrió, cómo actuó la autoridad de tránsito y cuál es su duda específica sobre el procedimiento o la infracción.</p>
+              </div>
+            </div>
+            <div class="help-step">
+              <div class="step-num">02</div>
+              <div class="step-body">
+                <strong>Incluya contexto relevante</strong>
+                <p>Indique ciudad, fecha aproximada, tipo de infracción, inmovilización del vehículo u otras actuaciones relacionadas con el caso.</p>
+              </div>
+            </div>
+            <div class="help-step">
+              <div class="step-num">03</div>
+              <div class="step-body">
+                <strong>Solicite análisis normativo</strong>
+                <p>Puede pedir explícitamente: <em>“Indique qué normas aplican a este caso” o “Analice si el procedimiento realizado fue válido según el Código Nacional de Tránsito”</em>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="help-card">
+          <div class="help-card-hd">
+            <div class="hc-icon">❓</div>
+            <h2>Preguntas Frecuentes</h2>
+          </div>
+          <div id="faqList">
+
+            <div class="faq-item">
+              <div class="faq-q">
+                ¿Cómo usa el sistema la Ley 769 para responder?
+                <span class="faq-chev">▼</span>
+              </div>
+              <div class="faq-a">
+                El sistema utiliza Retrieval-Augmented Generation (RAG) para buscar fragmentos relevantes de la Ley 769 en su base de datos y generar respuestas basadas en ese contexto legal.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-q">
+                ¿Cómo sé si la respuesta está respaldada por la fuente correcta?
+                <span class="faq-chev">▼</span>
+              </div>
+              <div class="faq-a">
+                Buscamos fragmentos de texto en documentos oficiales y vinculamos las conclusiones a los artículos o secciones relevantes para mantener la trazabilidad y precisión.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-q">
+                ¿Qué pasa si el tema no está cubierto en el fragmento disponible?
+                <span class="faq-chev">▼</span>
+              </div>
+              <div class="faq-a">
+                En ese caso, el sistema intenta ser transparente y puede indicar que la respuesta se basa en información limitada o sugerir buscar la fuente completa directamente.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-q">
+                ¿El sistema puede responder consultas complejas sobre procedimientos y sanciones?
+                <span class="faq-chev">▼</span>
+              </div>
+              <div class="faq-a">
+                Sí. El sistema está diseñado para abordar temas de sanciones, procedimientos y categorías de infracciones según el fragmento de Ley 769 disponible, siempre con un enfoque informativo y no sustituto de asesoría legal.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /help-main -->
+
+      <!-- ───── SIDEBAR DERECHO ───── -->
+      <div class="help-aside">
+
+        <div class="aside-card">
+          <div class="aside-label">Fuentes Oficiales</div>
+          <a href="https://mintransporte.gov.co/" target="_blank" class="source-btn"><span>🏛️</span> Ministerio de Transporte</a>
+          <a href="https://www.fcm.org.co/simit/#/home-public" target="_blank" class="source-btn"><span>🔍</span> SIMIT (Estado de Cuenta)</a>
+          <a href="https://www.runt.gov.co/" target="_blank" class="source-btn"><span>🚗</span> RUNT (Vehículos y Licencias)</a>
+        </div>
+
+        <div class="aside-card precision">
+          <div class="aside-label">Precisión Técnica</div>
+          <div class="precision-icon">🎯</div>
+          <p><strong>Versión Beta:</strong> La base de información de TransitLex contiene las páginas 65-81 del Código Nacional de Tránsito, que abarca información sobre <strong>Sanciones y Procedimientos</strong>. Esta es una versión inicial del sistema.</p>
+          <button class="btn-outline-light">Ver bitácora de cambios →</button>
+        </div>
+
+        <div class="aside-card support">
+          <div class="support-icon">💬</div>
+          <div class="support-title">¿Necesita soporte humano?</div>
+          <div class="support-desc">Si el sistema RAG no resolvió su duda legal específica, contáctenos.</div>
+          <a href="mailto:soporte@transitlex.co" class="support-email">soporte@transitlex.co</a>
+        </div>
+
+      </div><!-- /help-aside -->
+
+    </div><!-- /help-grid -->
+
+    <!-- Footer dentro del main -->
+    <footer class="footer" style="margin-top: 44px;">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">
+            <img class="footer-logo" src="/assets/logo_transitlex.png" alt="TransitLex"/>
+            TransitLex Colombia
+          </div>
+          <p>Asistente legal automatizado especializado en el Código Nacional de Tránsito de Colombia.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Plataforma</h4>
+          <a href="#">Fotomultas</a>
+          <a href="#">Impugnaciones</a>
+          <a href="#">Consultar RUNT</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Términos de Uso</a>
+          <a href="#">Privacidad de Datos</a>
+          <a href="/ayuda">Aviso Legal</a>
         </div>
       </div>
-      <nav class="nav">
-        <a href="/">Inicio</a>
-        <a href="/ayuda">Ayuda</a>
-      </nav>
-    </header>
-    <main class="help-wrap">
-      <section class="help-card">
-        <h2>Cómo plantear el caso</h2>
-        <ol>
-          <li>Describa con precisión los hechos y la conducta sancionada.</li>
-          <li>Indique el tipo de comparendo y cualquier artículo citado.</li>
-          <li>Agregue detalles de señalización, pruebas o testigos.</li>
-        </ol>
-      </section>
+      <div class="footer-bottom">
+        <span>© 2025 TransitLex Colombia. Todos los derechos reservados.</span>
+        <div class="footer-bottom-right">
+          <span>Ley 769 de 2002 · Código Nacional de Tránsito</span>
+          <span class="footer-tag">Juris Traffic System</span>
+        </div>
+      </div>
+    </footer>
 
-      <section class="help-card">
-        <h2>¿Cómo funciona el sistema RAG?</h2>
-        <p>El sistema utiliza <strong>Retrieval Augmented Generation (RAG)</strong>:</p>
-        <ol>
-          <li>Tu consulta se convierte en un vector numérico (embedding).</li>
-          <li>Se buscan los fragmentos más relevantes en la base de conocimiento.</li>
-          <li>El LLM genera una respuesta basada <em>únicamente</em> en esos fragmentos.</li>
-        </ol>
-        <p>Los fragmentos recuperados se muestran en la consola del servidor para verificación.</p>
-      </section>
+  </main>
 
-      <section class="help-card">
-        <h2>Ejemplos de consultas</h2>
-        <ul>
-          <li>"Recibí un comparendo por semáforo en rojo, pero pasé en amarillo."</li>
-          <li>"Me multaron por estacionar donde no había señalización visible."</li>
-          <li>"Quieren sancionarme por exceso de velocidad en zona escolar."</li>
-        </ul>
-      </section>
+</div><!-- /layout -->
 
-      <section class="help-card">
-        <h2>Notas importantes</h2>
-        <p>El análisis se basa exclusivamente en los documentos PDF cargados en el sistema.
-           No sustituye asesoría legal profesional. Verifique siempre con un abogado
-           especializado en tránsito.</p>
-      </section>
-    </main>
-  </div>
+<script>
+  /* FAQ accordion */
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(o => o.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
 </body>
 </html>
